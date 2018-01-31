@@ -14,8 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth import views as auth
+from django.conf.urls import url, include
+
+if hasattr(auth, 'LoginView'):
+    auth_login = auth.LoginView.as_view()
+    auth_logout = auth.LogoutView.as_view()
+else:
+    auth_login = auth.login
+    auth_logout = auth.logout
+
+auth_urlpatterns = [
+    url(r'^login/$', auth_login,
+        {'template_name': 'login.html'},
+        name='login'),
+    url(r'^logout/$', auth_logout,
+        {'next_page': '/'},
+        name='logout'),
+]
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r'^auth/', include('django_lti_login.urls')),  # XXX: for django-lti-login
+    url(r'^auth/', include(auth_urlpatterns)),
+    url('admin/', admin.site.urls),
+    url(r'^', include('lti_example.urls')),
 ]

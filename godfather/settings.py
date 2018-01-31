@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_lti_login', # XXX: for django-lti-login
+    'lti_example',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django_lti_login.backends.LTIAuthBackend', # XXX: for django-lti-login
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -98,6 +105,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# XXX: for django-lti-login
+AUTH_LTI_LOGIN = {
+    # e.g. roles: Instructor, TeachingAssistant, Student
+    'ACCEPTED_ROLES': ['Instructor', 'TeachingAssistant'], # Allow with Instructor and TeachingAssistant
+    'STAFF_ROLES': ['Instructor'], # set is_staff=True for teachers.
+    # read more from django_lti_login.apps.app_settings
+}
 
 
 # Internationalization
