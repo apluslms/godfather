@@ -1,0 +1,2 @@
+-e git+https://github.com/Aalto-LeTech/django-lti-login.git@master#egg=django-lti-login
+django==2.0.1
