@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^auth/', include(auth_urlpatterns)),
     url('admin/', admin.site.urls),
     url(r'^', include('lti_example.urls')),
+    url(r'groups/', include('groups.urls')),
 ]
