@@ -1,0 +1,21 @@
+<h1>Groups</h1>
+<table border="1">
+<tr>
+    <th>Id</th>
+    <th>Parent Group</th>
+    <th>Child Groups</th>
+    <th>Members</th>
+    <th>Created Time</th>
+</tr>
+{% for usergroup in object_list %}
+    <tr>
+        <td>{{ usergroup.id }}</td>
+        <td>{{ usergroup.parent_group }}</td>
+        <td>{{ usergroup.child_groups.all }}</td>
+        <td>{{ usergroup.members.all }}</td>
+        <td>{{ usergroup.timestamp }}</td>
+    </tr>
+{% empty %}
+    <tr>No groups yet.</tr>
+{% endfor %}
+</table>
