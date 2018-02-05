@@ -7,7 +7,7 @@ def frontpage(request):
 
     if authed:
         context = {k: request.session[k] for k in ('course_lms', 'course_id', 'course_label', 'course_name')}
-        context['user'] = request.user
+        context['user'] = request.user.get_full_name()
         return render(request, 'frontpage.html', context)
     else:
         context = {'lti_keys': LTIClient.objects.all().order_by('description', 'key')}

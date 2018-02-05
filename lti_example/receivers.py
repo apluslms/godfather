@@ -15,7 +15,7 @@ from django.dispatch import receiver
 from django_lti_login.signals import lti_login_authenticated
 
 
-logger = logging.getLogger('exampleapp.receivers')
+logger = logging.getLogger('lti_example.receivers')
 
 
 @receiver(lti_login_authenticated)
