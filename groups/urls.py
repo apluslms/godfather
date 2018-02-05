@@ -1,8 +1,11 @@
-from django.urls import path
+from django.conf.urls import url
 
-from groups.views import UserProfileListView, UserGroupListView
+from groups.views import UserProfileListView, UserGroupListView, edit_group
 
 urlpatterns = [
-    path('users', UserProfileListView.as_view(), name='userprofile-list'),
-    path('groups', UserGroupListView.as_view(), name='usergroup-list'),
+    url(r'users$', UserProfileListView.as_view(), name='userprofile-list'),
+    url(r'^$', UserGroupListView.as_view(), name='usergroup-list'),
+    url(r'^new/$', edit_group, name='group-edit'),
+    url(r'^([\w-]+)/$', edit_group, name='group-edit')
+
 ]

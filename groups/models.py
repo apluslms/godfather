@@ -20,9 +20,13 @@ class UserProfile(models.Model):
 
 class UserGroup(models.Model):
 
+    group_name = models.CharField(max_length=40, default='', unique=True)
     parent_group = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='child_groups')
     members = models.ManyToManyField(UserProfile, related_name='belonged_groups')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['timestamp']
+
+    def __str__(self):
+        return "{} ".format(self.group_name)
