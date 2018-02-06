@@ -1,2 +1,4 @@
 git+https://github.com/Aalto-LeTech/django-lti-login.git@2.0.1#egg=django-lti-login==2.0.1
 django==2.0.1
+#used to display group in tree structure
+django-mptt

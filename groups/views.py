@@ -3,18 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, UserGroup
 from .forms import UserGroupForm
 
-class UserProfileListView(ListView):
-    model = UserProfile
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
 class UserGroupListView(ListView):
     model = UserGroup
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['nodes'] = UserGroup.objects.all()
         return context
 
 

@@ -9,6 +9,6 @@ class UserGroupForm(forms.ModelForm):
         model = UserGroup
         fields = [
             'group_name',
-            'parent_group',
+            'parent',
             'members',
         ]

@@ -4,34 +4,19 @@
         <h1>Groups</h1>
     </div>
     <p>
-        <a href="{% url 'group-edit' %}" class="btn btn-default btn-sm">New group</a>
+        <a href="{% url 'group-edit' %}" class="btn btn-default btn-sm">Add new group</a>
     </p>
-    <table class="table table-bordered">
-        <tr>
-            <th>Id</th>
-            <th>Group Name</th>
-            <th>Parent Group</th>
-            <th>Child Groups</th>
-            <th>Members</th>
-            <th>Created Time</th>
-            <th>Edit</th>
-        </tr>
-        {% for usergroup in object_list %}
-            <tr>
-                <td>{{ usergroup.id }}</td>
-                <td>{{ usergroup.group_name }}</td>
-                <td>{{ usergroup.parent_group.group_name }}</td>
-                <td>
-                    {% for child_group in usergroup.child_groups.all %}
-                        <p>{{ child_group.group_name }}, </p>
-                    {% endfor %}
-                </td>
-                <td>{{ usergroup.members.all }}</td>
-                <td>{{ usergroup.timestamp }}</td>
-                <td><a href="{% url 'group-edit' usergroup.group_name %}" class="btn btn-default btn-sm">Edit</a></td>
-            </tr>
-        {% empty %}
-            <tr>No groups yet.</tr>
-        {% endfor %}
-    </table>
+    {% load mptt_tags %}
+    <ul>
+        {% recursetree nodes %}
+            <li>
+                <a href="{% url 'group-edit' node.group_name %}">{{ node.group_name }}</a>
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
 {% endblock %}
