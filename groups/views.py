@@ -22,7 +22,8 @@ def edit_group(request, group_name=None):
     for name in form.fields:
         form.fields[name].widget.attrs = {'class': 'form-control'}
     if request.method == 'POST' and form.is_valid():
-        form.save()
+        form_obj = form.save(commit=False)
+        form_obj.save()
         return redirect('usergroup-list')
     return render(request, 'groups/edit.html', {
         'usergroup': usergroup,
