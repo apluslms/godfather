@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_lti_login', # XXX: for django-lti-login
+    'bootstrapform',
     'mptt',
     'lti_example',
     'groups',

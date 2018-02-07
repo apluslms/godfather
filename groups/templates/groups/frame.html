@@ -1,19 +1,54 @@
+{% load i18n %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-		<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-		{% block head %}
-		{% endblock %}
-	</head>
-	<body>
-		<div class="container-fluid">
-			<div class="col-md-6 col-md-offset-3">
-				{% block body %}
-				{% endblock %}
-			</div>
-		</div>
-	</body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <script type="text/javascript" async
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+
+<script src="{% static "groups.js" %}"></script>
+    {% block head %}
+    {% endblock %}
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3">
+        {% block body %}
+        {% endblock %}
+    </div>
+</div>
+<div id="search-select-widget" class="hide">
+    <ul class="list-inline search-selected">
+        <li>
+            <button type="button"><span class="name">None</span> <span aria-label="{% trans 'Remove' %}">&times;</span>
+            </button>
+        </li>
+    </ul>
+    <div class="input-group">
+                <span class="input-group-btn dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-default" data-toggle="dropdown" type="button"
+                            aria-label="{% trans 'Search' %}">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu search-options">
+                        <li class="not-found"><a>{% trans "No matches" %}</a></li>
+                    </ul>
+                </span>
+        <input type="text" class="form-control" placeholder="{% trans 'Search for...' %}"/>
+    </div>
+</div>
+</body>
 </html>

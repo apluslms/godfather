@@ -1,27 +1,30 @@
 {% extends 'groups/frame.html' %}
+{% load i18n %}
+{% load bootstrap %}
 
 {% block title %}{{ block.super }} :: Manager, Edit {{ usergroup.group_name }}{% endblock %}
 
 {% block body %}
-<div class="page-header">
-  <h1>
-    {% if usergroup %}Edit {{ usergroup.group_name }} User Group Settings{% else %}Add new user group{% endif %}
-  </h1>
-</div>
-<form method="post">
-  {% csrf_token %}
-  {% for field in form %}
-  <div class="form-group{% if field.errors %} has-error{% endif %}">
-    {{ field.label_tag }}
-    {{ field }}
-    {% if field.errors %}
-    <div class="alert alert-danger">
-      {{ field.errors }}
+    <div class="page-header">
+        <h1>
+            {% if usergroup %}Edit {{ usergroup.group_name }} User Group Settings{% else %}Add new user group{% endif %}
+        </h1>
     </div>
-    {% endif %}
-  </div>
-  {% endfor %}
-  <input type="submit" value="Save" class="btn btn-primary">
-  <a href="{% url 'usergroup-list' %}" class="btn btn-warning">Cancel</a>
-</form>
+    {% block columns %}
+        <div class="col-md-12">
+            <form method="post" class="well form" novalidate>
+                {% csrf_token %}
+                <legend>{% trans "Edit group members" %}</legend>
+                {{ form|bootstrap }}
+                <input type="submit" value="Save" class="btn btn-primary">
+                <a href="{% url 'usergroup-list' %}" class="btn btn-warning">Cancel</a>
+            </form>
+
+        </div>
+    {% endblock %}
+
+
+
 {% endblock %}
+
+

@@ -5,8 +5,13 @@ from .models import UserGroup, UserProfile, Membership
 
 class UserGroupForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["members"].help_text = ""
+        self.fields['members'].queryset = UserProfile.objects.all()
+        self.fields['members'].required = False
+
     parent = forms.ModelChoiceField(queryset=UserGroup.objects.all(), required=False)
-    members = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.all(), required=False)
 
     def save(self, commit=True):
         usergroup = super(UserGroupForm, self).save(commit=False)
@@ -25,3 +30,5 @@ class UserGroupForm(forms.ModelForm):
             'parent',
             'members',
         ]
+
+
