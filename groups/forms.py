@@ -17,9 +17,22 @@ class UserGroupForm(forms.ModelForm):
         usergroup = super(UserGroupForm, self).save(commit=False)
         usergroup.group_name = self.cleaned_data['group_name']
         usergroup.parent = self.cleaned_data['parent']
+
+        # delete members
+        current_membership = Membership.objects.filter(usergroup=usergroup)
+        current_members = []
+        for membership in current_membership:
+            current_members.append(membership.userprofile)
+        for member in current_members:
+            if member not in self.cleaned_data['members']:
+                removed_memberships = Membership.objects.filter(usergroup=usergroup, userprofile=member)
+                removed_memberships.delete()
+        # add new members
         for member in self.cleaned_data['members']:
-            membership = Membership.objects.create(userprofile=member, usergroup=usergroup)
-            membership.save()
+            if not Membership.objects.filter(userprofile=member, usergroup=usergroup):
+                membership = Membership.objects.create(userprofile=member, usergroup=usergroup)
+                membership.save()
+
         if commit:
             usergroup.save()
 
