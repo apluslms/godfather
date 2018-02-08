@@ -2,6 +2,18 @@ $(function () {
     $('#id_members').aplusSearchSelect();
 });
 
+
+function openDialog() {
+    document.getElementById('light').style.display = 'block';
+    document.getElementById('fade').style.display = 'block'
+}
+
+function closeDialog() {
+    document.getElementById('light').style.display = 'none';
+    document.getElementById('fade').style.display = 'none'
+}
+
+
 (function ($, window, document, undefined) {
     "use strict";
 
@@ -93,7 +105,12 @@ $(function () {
                 var self = this;
                 li.find(".name").text(name);
                 li.find("button").attr("data-value", value).on('click', function (event) {
-                    $(this).parent("li").remove();
+                    openDialog();
+                    document.getElementById('removeMember').onclick = function(event){
+                        li.find("button").attr("data-value", value).parent("li").remove();
+                        closeDialog();
+                    }
+
                 });
                 this.selection.append(li);
             }
