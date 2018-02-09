@@ -14,7 +14,6 @@
         <div class="col-md-12">
             <form method="post" class="well form" novalidate>
                 {% csrf_token %}
-                <legend>{% trans "Edit group members" %}</legend>
                 {{ form|bootstrap }}
                 <input type="submit" value="Save" class="btn btn-primary">
                 <a href="{% url 'usergroup-list' %}" class="btn btn-warning">Cancel</a>

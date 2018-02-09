@@ -33,6 +33,6 @@ class UserGroup(MPTTModel):
 class Membership(models.Model):
     userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     usergroup = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
-    is_administrator = models.BooleanField(default=True)
+    is_administrator = models.BooleanField(default=False)
     joined_time = models.DateTimeField(auto_now_add=True)
 

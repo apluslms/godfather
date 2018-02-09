@@ -14,14 +14,15 @@ function closeDialog() {
 }
 
 function addAdmin(admin) {
-    $("#id_administrators").append(new Option(admin.trim(), admin.trim()));
+    if (!$("#id_administrators option[value= " + admin.attr("data-value") + "]").length) {
+        $("#id_administrators").append(new Option(admin.text().trim(), admin.attr("data-value")));
+        $("#id_administrators option[value= " + admin.attr("data-value") + "]").prop('selected', true);
+    }
 }
 
 function removeAdmin(admin) {
-    var admin = admin.trim();
-
+    var admin = admin.attr("data-value");
     $("#id_administrators option[value= " + admin + "]").remove();
-
 }
 
 
@@ -117,18 +118,19 @@ function removeAdmin(admin) {
                 li.find(".name").text(name);
                 li.find("button").attr("data-value", value).on('click', function (event) {
                     openDialog();
-                    document.getElementById('removeMember').onclick = function(event){
+                    document.getElementById('removeMember').onclick = function (event) {
                         li.find("button").attr("data-value", value).parent("li").remove();
+                        removeAdmin(li.find("button").attr("data-value", value));
                         closeDialog();
                     }
 
-                     document.getElementById('setAdmin').onclick = function(event){
-                        addAdmin(li.find("button").attr("data-value", value).parent("li").text());
+                    document.getElementById('setAdmin').onclick = function (event) {
+                        addAdmin(li.find("button").attr("data-value", value));
                         closeDialog();
                     }
 
-                     document.getElementById('unsetAdmin').onclick = function(event){
-                        removeAdmin(li.find("button").attr("data-value", value).parent("li").text());
+                    document.getElementById('unsetAdmin').onclick = function (event) {
+                        removeAdmin(li.find("button").attr("data-value", value));
                         closeDialog();
                     }
 

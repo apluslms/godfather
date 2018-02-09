@@ -40,9 +40,9 @@
             top: 25%;
             left: 25%;
             width: 20%;
-            height: 20%;
+            height: 25%;
             padding: 20px;
-            border: 10px solid orange;
+            border: 5px solid deepskyblue;
             background-color: white;
             z-index: 1002;
             overflow: auto;
@@ -62,10 +62,14 @@
 
 
 <div id="light" class="white_content">
-    <a id="removeMember" href="javascript:void(0)" class="btn btn-warning">Remove</a>
-    <a id="setAdmin" href="javascript:void(0)" class="btn btn-warning">Set Admin</a>
-    <a id="unsetAdmin" href="javascript:void(0)" class="btn btn-warning">Unset Admin</a>
-    <a href="javascript:void(0)" onclick="closeDialog()" class="btn btn-warning">Close</a>
+    <div><a id="removeMember" href="javascript:void(0)" class="btn btn-danger">Remove</a></div>
+    <br/>
+    <div><a id="setAdmin" href="javascript:void(0)" class="btn btn-success">Set Admin</a>
+        <a id="unsetAdmin" href="javascript:void(0)" class="btn btn-warning">Unset Admin</a></div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="text-center"><a href="javascript:void(0)" onclick="closeDialog()" class="btn btn-info">Close</a></div>
 </div>
 <div id="fade" class="black_overlay"></div>
 
