@@ -4,13 +4,24 @@ $(function () {
 
 
 function openDialog() {
-    document.getElementById('light').style.display = 'block';
-    document.getElementById('fade').style.display = 'block'
+    $('#light')[0].style.display = 'block';
+    $('#fade')[0].style.display = 'block';
 }
 
 function closeDialog() {
-    document.getElementById('light').style.display = 'none';
-    document.getElementById('fade').style.display = 'none'
+    $('#light')[0].style.display = 'none';
+    $('#fade')[0].style.display = 'none';
+}
+
+function addAdmin(admin) {
+    $("#id_administrators").append(new Option(admin.trim(), admin.trim()));
+}
+
+function removeAdmin(admin) {
+    var admin = admin.trim();
+
+    $("#id_administrators option[value= " + admin + "]").remove();
+
 }
 
 
@@ -110,6 +121,17 @@ function closeDialog() {
                         li.find("button").attr("data-value", value).parent("li").remove();
                         closeDialog();
                     }
+
+                     document.getElementById('setAdmin').onclick = function(event){
+                        addAdmin(li.find("button").attr("data-value", value).parent("li").text());
+                        closeDialog();
+                    }
+
+                     document.getElementById('unsetAdmin').onclick = function(event){
+                        removeAdmin(li.find("button").attr("data-value", value).parent("li").text());
+                        closeDialog();
+                    }
+
 
                 });
                 this.selection.append(li);

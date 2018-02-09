@@ -12,6 +12,7 @@ class UserGroupForm(forms.ModelForm):
         self.fields['members'].required = False
 
     parent = forms.ModelChoiceField(queryset=UserGroup.objects.all(), required=False)
+    administrators = forms.MultipleChoiceField(required=False)
 
     def save(self, commit=True):
         usergroup = super(UserGroupForm, self).save(commit=False)
