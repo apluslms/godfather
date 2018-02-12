@@ -11,8 +11,6 @@ class UserGroupForm(forms.ModelForm):
         self.fields['members'].help_text = ""
         self.fields['members'].queryset = UserProfile.objects.all()
         self.fields['members'].required = False
-        self.fields['administrators'].queryset = self.get_administrators()
-        self.fields['administrators'].initial = self.get_administrators()
 
     parent = forms.ModelChoiceField(queryset=UserGroup.objects.all(), required=False)
     administrators = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.all(), required=False)
@@ -23,17 +21,6 @@ class UserGroupForm(forms.ModelForm):
         usergroup.parent = self.cleaned_data['parent']
         usergroup.save()
         self.save_members(usergroup)
-
-    def get_administrators(self):
-        usergroup = super(UserGroupForm, self).save(commit=False)
-
-        current_administrators_memberships = Membership.objects.filter(usergroup=usergroup, is_administrator=True)
-        current_administrators_id = []
-        for current_administrators_membership in current_administrators_memberships:
-            administrator_id = current_administrators_membership.userprofile.id
-            current_administrators_id.append(administrator_id)
-
-        return UserProfile.objects.filter(id__in = current_administrators_id)
 
     def save_members(self, usergroup):
         administrators = self.cleaned_data['administrators']

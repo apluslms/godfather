@@ -14,9 +14,9 @@ function closeDialog() {
 }
 
 function addAdmin(admin) {
-    if (!$("#id_administrators option[value= " + admin.attr("data-value") + "]").length) {
-        $("#id_administrators").append(new Option(admin.text().trim(), admin.attr("data-value")));
-        $("#id_administrators option[value= " + admin.attr("data-value") + "]").prop('selected', true);
+    var toAddMember = $("#id_administrators option[value= " + admin.attr("data-value") + "]")
+    if (!toAddMember.is(':selected')) {
+        toAddMember.prop('selected', true);
         admin.find(".name").append(' (Admin)');
     }
 }
@@ -116,8 +116,8 @@ function removeAdmin(admin) {
             if (this.selection.find('[data-value="' + value + '"]').size() === 0) {
                 var li = this.selection_li.clone();
                 var self = this;
-                var admins = document.querySelector('#id_administrators');
-                if (admins.querySelectorAll("option[value='"+value+"']").length) {
+                var selected = document.querySelector("#id_administrators option[value='"+value+"']").selected;
+                if (selected) {
                     li.find(".name").text(name).append(' (Admin)');
                 }
                 else {
@@ -125,6 +125,7 @@ function removeAdmin(admin) {
                 }
 
                 li.find("button").attr("data-value", value).on('click', function (event) {
+
                     openDialog();
                     document.querySelector('#removeMember').onclick = function (event) {
                         li.find("button").attr("data-value", value).parent("li").remove();
