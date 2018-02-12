@@ -17,12 +17,13 @@ function addAdmin(admin) {
     if (!$("#id_administrators option[value= " + admin.attr("data-value") + "]").length) {
         $("#id_administrators").append(new Option(admin.text().trim(), admin.attr("data-value")));
         $("#id_administrators option[value= " + admin.attr("data-value") + "]").prop('selected', true);
+        admin.find(".name").append(' (Admin)');
     }
 }
 
 function removeAdmin(admin) {
-    var admin = admin.attr("data-value");
-    $("#id_administrators option[value= " + admin + "]").remove();
+    var admin_value = admin.attr("data-value");
+    $("#id_administrators option[value= " + admin_value + "]").remove();
 }
 
 
@@ -115,22 +116,30 @@ function removeAdmin(admin) {
             if (this.selection.find('[data-value="' + value + '"]').size() === 0) {
                 var li = this.selection_li.clone();
                 var self = this;
-                li.find(".name").text(name);
+                var admins = document.querySelector('#id_administrators');
+                if (admins.querySelectorAll("option[value='"+value+"']").length) {
+                    li.find(".name").text(name).append(' (Admin)');
+                }
+                else {
+                    li.find(".name").text(name);
+                }
+
                 li.find("button").attr("data-value", value).on('click', function (event) {
                     openDialog();
-                    document.getElementById('removeMember').onclick = function (event) {
+                    document.querySelector('#removeMember').onclick = function (event) {
                         li.find("button").attr("data-value", value).parent("li").remove();
                         removeAdmin(li.find("button").attr("data-value", value));
                         closeDialog();
                     }
 
-                    document.getElementById('setAdmin').onclick = function (event) {
+                    document.querySelector('#setAdmin').onclick = function (event) {
                         addAdmin(li.find("button").attr("data-value", value));
                         closeDialog();
                     }
 
-                    document.getElementById('unsetAdmin').onclick = function (event) {
+                    document.querySelector('#unsetAdmin').onclick = function (event) {
                         removeAdmin(li.find("button").attr("data-value", value));
+                        li.find(".name").text(name);
                         closeDialog();
                     }
 
