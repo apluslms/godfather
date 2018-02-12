@@ -1,5 +1,7 @@
 $(function () {
     $('#id_members').aplusSearchSelect();
+    $("[for= 'id_administrators']").hide();
+    $("#id_administrators").hide();
 });
 
 
