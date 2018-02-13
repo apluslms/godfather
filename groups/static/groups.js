@@ -29,7 +29,6 @@ function removeAdmin(admin) {
     $("#id_administrators option[value= " + admin_value + "]").prop('selected', false);
 }
 
-
 (function ($, window, document, undefined) {
     "use strict";
 
@@ -120,7 +119,7 @@ function removeAdmin(admin) {
                 var li = this.selection_li.clone();
                 var self = this;
                 //check if member is in administrators
-                var selectedElement = document.querySelector("#id_administrators option[value='"+value+"']");
+                var selectedElement = document.querySelector("#id_administrators option[value='" + value + "']");
                 var selected = false;
                 if (selectedElement != null) {
                     //check if the member is selected

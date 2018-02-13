@@ -7,7 +7,7 @@
 {% block body %}
     <div class="page-header">
         <h1>
-            {% if usergroup %}Edit {{ usergroup.group_name }} User Group Settings{% else %}Add new user group{% endif %}
+            {% if usergroup %}Edit User Group {{ usergroup.group_name }} {% else %}Add new user group{% endif %}
         </h1>
     </div>
     {% block columns %}
@@ -17,8 +17,8 @@
                 {{ form|bootstrap }}
                 <input type="submit" value="Save" class="btn btn-primary">
                 <a href="{% url 'usergroup-list' %}" class="btn btn-warning">Cancel</a>
+                {% if usergroup %}<a id="deleteGroup" href="../delete/{{ usergroup.group_name }}" class="btn btn-danger pull-right" data-confirm="true">Delete</a>{% endif %}
             </form>
-
         </div>
     {% endblock %}
 

@@ -1,5 +1,6 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from .models import UserProfile, UserGroup, Membership
 from .forms import UserGroupForm
 
@@ -11,6 +12,20 @@ class UserGroupListView(ListView):
         context = super().get_context_data(**kwargs)
         context['nodes'] = UserGroup.objects.all()
         return context
+
+class UserGroupDeleteView(DeleteView):
+    model = UserGroup
+    slug_url_kwarg = 'group_name'
+    success_url = reverse_lazy('usergroup-list')
+
+    def get_object(self, queryset=None):
+        group_name = self.kwargs['group_name']
+        try:
+            usergroup = self.model.objects.get(group_name=group_name)
+        except UserGroup.DoesNotExist:
+            usergroup = None
+        return usergroup
+
 
 def edit_group(request, group_name=None):
     if group_name:

@@ -1,0 +1,27 @@
+{% extends 'groups/frame.html' %}
+{% load i18n %}
+{% load bootstrap %}
+
+{% block body %}
+
+     <div class="page-header">
+        <h1>
+            {% if usergroup %}Delete User Group {{ usergroup.group_name }} {% else %}UserGroup does not exist{% endif %}
+        </h1>
+    </div>
+
+    {% block columns %}
+        <div class="col-md-12">
+        {% if object %}
+            <form action="" method="post" class="well form" novalidate>{% csrf_token %}
+                <p>Are you sure you want to delete user group {{ object }}?</p>
+                <input type="submit" value="Yes" class="btn btn-primary">
+                <a href="{% url 'usergroup-list' %}" class="btn btn-warning">Cancel</a>
+            </form>
+        {% else %}UserGroup does not exist{% endif %}
+        </div>
+    {% endblock %}
+
+
+
+{% endblock %}
