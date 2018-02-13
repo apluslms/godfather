@@ -1,5 +1,6 @@
 $(function () {
     $('#id_members').aplusSearchSelect();
+    //hide administrators field
     $("[for= 'id_administrators']").hide();
     $("#id_administrators").hide();
 });
@@ -25,7 +26,7 @@ function addAdmin(admin) {
 
 function removeAdmin(admin) {
     var admin_value = admin.attr("data-value");
-    $("#id_administrators option[value= " + admin_value + "]").remove();
+    $("#id_administrators option[value= " + admin_value + "]").prop('selected', false);
 }
 
 
@@ -118,7 +119,13 @@ function removeAdmin(admin) {
             if (this.selection.find('[data-value="' + value + '"]').size() === 0) {
                 var li = this.selection_li.clone();
                 var self = this;
-                var selected = document.querySelector("#id_administrators option[value='"+value+"']").selected;
+                //check if member is in administrators
+                var selectedElement = document.querySelector("#id_administrators option[value='"+value+"']");
+                var selected = false;
+                if (selectedElement != null) {
+                    //check if the member is selected
+                    selected = selectedElement.selected;
+                }
                 if (selected) {
                     li.find(".name").text(name).append(' (Admin)');
                 }
@@ -129,6 +136,7 @@ function removeAdmin(admin) {
                 li.find("button").attr("data-value", value).on('click', function (event) {
 
                     openDialog();
+
                     document.querySelector('#removeMember').onclick = function (event) {
                         li.find("button").attr("data-value", value).parent("li").remove();
                         removeAdmin(li.find("button").attr("data-value", value));
