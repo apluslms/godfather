@@ -33,6 +33,7 @@ def edit_group(request, group_name=None):
         form = UserGroupForm(request.POST or None, instance=usergroup)
         form.fields['administrators'].queryset = UserProfile.objects.all()
         form.fields['administrators'].initial = get_administrators(usergroup)
+        form.fields['parent'].queryset = UserGroup.objects.all().exclude(group_name = group_name)
     else:
         usergroup = None
         form = UserGroupForm(request.POST or None)
