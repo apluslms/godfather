@@ -3,3 +3,4 @@ django==2.0.1
 #used to display group in tree structure
 django-mptt
 django-bootstrap-form==3.2.1
+Jinja2
