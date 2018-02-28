@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'mptt',
     'lti_example',
     'groups',
+    'authorization',
 ]
 
 MIDDLEWARE = [
