@@ -30,6 +30,16 @@ class BasePermission(object):
         """
         return True
 
+class NoPermission(BasePermission):
+    """
+    Base Permission class that gives no access permission to anyone.
+    """
+    def has_permission(self, request, view):
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        return False
+
 
 class MessageMixin(object):
     """

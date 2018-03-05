@@ -1,9 +1,16 @@
 from django.views.generic import ListView, DeleteView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from .models import UserProfile, UserGroup, Membership
 from .forms import UserGroupForm
+from .permissions import GroupEditPermission
+from lib.viewbase import BaseFormView
+
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 class UserGroupListView(ListView):
@@ -27,10 +34,32 @@ class UserGroupDeleteView(DeleteView):
             usergroup = None
         return usergroup
 
-class UserGroupEditView(FormView):
+class UserGroupEditView(BaseFormView):
     template_name = 'groups/edit.html'
     form_class = UserGroupForm
     success_url = 'usergroup-list'
+
+    module_permissions_classes = (
+        GroupEditPermission,
+    )
+
+    def get_permissions(self):
+        perms = super().get_permissions()
+        perms.extend((Perm() for Perm in self.module_permissions_classes))
+        return perms
+
+    def get_resource_objects(self, *args, **kwargs):
+        usergroup = None
+        super().get_resource_objects()
+        groupname = ''
+        if 'group_name' in self.kwargs:
+            groupname = self.kwargs['group_name']
+
+        if groupname:
+            usergroup = get_object_or_404(UserGroup, group_name=groupname)
+
+        self.usergroup = usergroup
+
 
     def get_context_data(self, **kwargs):
         group_name = ''
@@ -52,6 +81,7 @@ class UserGroupEditView(FormView):
                 'form': form,
             }
         return context
+
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
