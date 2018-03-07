@@ -56,7 +56,31 @@
 <div class="container-fluid">
     <div class="col-md-6 col-md-offset-3">
         {% block body %}
+
         {% endblock %}
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+        <ul class="user-menu nav navbar-nav navbar-right hidden-xs">
+            {% if user.is_authenticated %}
+
+                <li role="presentation" class="menu-profile">
+                    <a href={% url 'user-detail' user.get_full_name %}>
+
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        {{ user.get_full_name }}
+                    </a>
+
+                </li>
+                <li role="presentation">
+                    <a href="{% url 'logout' %}">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        {% trans "Log out" %}
+                    </a>
+                </li>
+
+            {% endif %}
+        </ul>
     </div>
 </div>
 

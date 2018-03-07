@@ -1,0 +1,30 @@
+{% extends 'groups/frame.html' %}
+{% load i18n %}
+{% load bootstrap %}
+
+{% block body %}
+
+    <div class="page-header">
+        <h1>
+            {{ user.get_full_name }} belongs to:
+        </h1>
+    </div>
+
+    {% block columns %}
+        <div class="col-md-12 list-group">
+            {% if memberships %}
+                {% for membership in memberships %}
+                    <a href={% url 'group-edit' membership.usergroup.group_name %} class="list-group-item">{{ membership.usergroup }}
+                        {% if membership.is_administrator %}
+                            <span class="badge">Administator</span>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+
+            {% else %}User has no belonged groups{% endif %}
+        </div>
+    {% endblock %}
+
+
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView, DeleteView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import UserProfile, UserGroup, Membership
@@ -39,13 +39,13 @@ class UserGroupEditView(BaseFormView):
     form_class = UserGroupForm
     success_url = 'usergroup-list'
 
-    module_permissions_classes = (
+    permissions_classes = (
         GroupEditPermission,
     )
 
     def get_permissions(self):
         perms = super().get_permissions()
-        perms.extend((Perm() for Perm in self.module_permissions_classes))
+        perms.extend((Perm() for Perm in self.permissions_classes))
         return perms
 
     def get_resource_objects(self, *args, **kwargs):
@@ -103,3 +103,28 @@ class UserGroupEditView(BaseFormView):
             administrator_id = current_administrators_membership.userprofile.id
             current_administrators_id.append(administrator_id)
         return UserProfile.objects.filter(id__in=current_administrators_id)
+
+
+class UserProfileDetailView(DetailView):
+    model = UserProfile
+    slug_url_kwarg = 'user_name'
+
+    def get_object(self, queryset=None):
+        user_name = ''
+        if 'user_name' in self.kwargs:
+            user_name = self.kwargs['user_name']
+        try:
+            userprofile = self.model.objects.get(name=user_name)
+        except UserProfile.DoesNotExist:
+            userprofile = None
+        return userprofile
+
+    def get_context_data(self, **kwargs):
+        userprofile = self.get_object()
+        memberships = Membership.objects.filter(userprofile=userprofile)
+        context = {
+            'memberships': memberships
+        }
+        return context
+
+
