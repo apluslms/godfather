@@ -65,11 +65,13 @@
             {% if user.is_authenticated %}
 
                 <li role="presentation" class="menu-profile">
-                    <a href={% url 'user-detail' user.get_full_name %}>
+                    {% if user.get_full_name %}
+                        <a href={% url 'user-detail' user.get_full_name %}>
 
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        {{ user.get_full_name }}
-                    </a>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            {{ user.get_full_name }}
+                        </a>
+                    {% endif %}
 
                 </li>
                 <li role="presentation">

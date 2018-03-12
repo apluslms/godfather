@@ -72,7 +72,7 @@ class AuthenticationMixin(AccessMixin):
             raise PermissionDenied(message)
 
         # Redirect not authenticated users to login
-        return redirect("/admin")
+        return redirect("/auth/login")
 
     def validate_request(self, request, *args, **kwargs):
         self.perform_authentication(request)
