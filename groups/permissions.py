@@ -31,10 +31,17 @@ class GroupEditPermission(MessageMixin, BasePermission):
             userprofile = None
         # get administrators
         administrators = self.get_administrators(usergroup)
-        # no administrators in this group, all members will pass
+        # no administrators in this group:
         if not administrators.exists():
-            return True
-        # user is not administrator
+            # no members in this group: PASS
+            if not Membership.objects.filter(usergroup=usergroup).exists():
+                return True
+            # group has no admin, user is member of this group: PASS
+            elif Membership.objects.filter(usergroup=usergroup, userprofile=userprofile).exists():
+                return True
+            else:
+                return False
+        # user is member but not administrator: FORBIDDEN
         if userprofile not in administrators:
             return False
 

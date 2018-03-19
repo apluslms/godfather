@@ -7,9 +7,11 @@
         <a href="{% url 'group-edit' %}" class="btn btn-default btn-sm">Add new group</a>
     </p>
     {% load mptt_tags %}
-    <ul>
+
+
+    <ul class="list-group">
         {% recursetree nodes %}
-            <li>
+            <li class="list-group-item">
                 <a href="{% url 'group-edit' node.group_name %}">{{ node.group_name }}</a>
                 {% if not node.is_leaf_node %}
                     <ul class="children">
@@ -19,4 +21,7 @@
             </li>
         {% endrecursetree %}
     </ul>
+
+
+
 {% endblock %}
