@@ -1,0 +1,23 @@
+{% extends 'base.jinja2' %}
+
+{% block head%}
+{% endblock %}
+
+
+{% block body %}
+<br>
+{% if messages %}
+  {% for message in messages%}
+    <div class="alert alert-danger container text-center">
+      <strong>{{message}}</strong>
+    </div>
+  {% endfor %}
+{% endif %}
+  <br>
+    <form method="post" class="container text-center">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+        <a href='/manage/delete_course/{{form.key.value}}/'  class="btn btn-primary"> Delete</a>
+    </form>
+{% endblock %}

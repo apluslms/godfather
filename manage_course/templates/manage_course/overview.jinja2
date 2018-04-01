@@ -1,0 +1,66 @@
+{% extends 'base.jinja2' %}
+
+{% block head %}
+    <title>title</title>
+{% endblock %}
+
+{% block body %}
+  <br>
+  {% if messages %}
+    {% for message in messages%}
+      <div class="alert alert-success container text-center">
+        <strong>{{message}}</strong>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="container">
+    <div class="col-xs-4 text-center">
+    {% if name %}
+      <h2>Authenticated as <strong>{{name}}</strong></h2>
+      <h2>Here are your courses:</h2>
+    {% endif %}
+    {% if not name %}
+      <h2>You are not authenticated!</h2>
+    {% endif %}
+    </div>
+    <br>
+      <div class="row container">
+      {% if not courses %}
+        <div class="container">
+          <div class="col-xs-4 text-center">
+            <h2> <strong>It seems you have no courses :c </strong></h2>
+          </div>
+      {% endif %}
+      {% for course in courses %}
+<!--        <div class="col-sm-4">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="https://picsum.photos/150/120/?random" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{course}}</h5>
+            <p class="card-text">{{course.key}}</p>
+            <a href="/manage/edit_course/{{ course.key }}" class="btn btn-primary">Manage Course <span class="badge badge-light">4</span></a>
+          </div>
+        </div>
+      </div> -->
+        <div class="panel panel-default container text-center">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2-{{course}}">
+                {{course}}</a>
+              </h4>
+            </div>
+            <div id="collapse2-{{course}}" class="panel-collapse collapse">
+              <div class="panel-body">
+                Course key: {{course.key}} <br>
+                Git Origin: {{course.git_origin}} <br>
+                Git Branch: {{course.git_branch}} <br><br>
+                <a href="/manage/edit_course/{{ course.key }}" class="btn btn-primary">Manage Course <span class="badge badge-light">4</span></a>
+                <br><br><br>
+              </div>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+  </div>
+{% endblock %}

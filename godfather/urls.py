@@ -39,4 +39,5 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^', include('lti_example.urls')),
     url(r'groups/', include('groups.urls')),
+    url(r'manage/', include('manage_course.urls')),
 ]

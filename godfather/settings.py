@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'lti_example',
     'groups',
     'authorization',
+    'manage_course'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,17 @@
+{% extends 'base.jinja2' %}
+
+{% block head%}
+  <title>Login</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+  <h1>Testlogin</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+</div>
+{% endblock %}
